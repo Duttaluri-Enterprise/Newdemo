@@ -1,0 +1,71 @@
+cd /etc/asterisk
+vi sip.conf
+
+
+[general]
+bindport = 5060
+bindaddr = 0.0.0.0
+srvlookup = yes
+disallow = all
+allow = ulaw
+;allow = g729
+insecure=very
+canreinvite=yes
+callevents=yes
+;defaultexpirey=180000
+;maxexpirey=360000
+context=default
+
+
+;maxexpiry=60                   ; Maximum allowed time of incoming registrations
+                                ; and subscriptions (seconds)
+;minexpiry=5                    ; Minimum length of registrations/subscriptions (default 60)
+;defaultexpiry=10               ; Default length of incoming/outgoing registration
+t1min=5                         ; Minimum roundtrip time for messages to monitored hosts
+                                ; Defaults to 100 ms
+;notifymimetype=text/plain      ; Allow overriding of mime type in MWI NOTIFY
+checkmwi=5                      ; Default time between mailbox checks for peers
+;buggymwi=no                    ; Cisco SIP firmware doesn't support the MWI RFC
+
+
+dtmfmode=rfc2833
+;callerid=<2013386163>
+notifyringing=yes
+qualify=yes
+notifyhold=yes
+;limitonpeer=yes
+;allowsubscribe=yes
+nat = yes
+
+register => +914049166166@ap.ims.airtel.in:Vishwa#1:+914049166166@ap.ims.airtel.in@10.5.109.131:5060/+914049166166
+;register => 914049166166@ap.ims.airtel.in:Vishwa#1:914049166166@ap.ims.airtel.in@10.5.109.131:5060/914049166166
+
+#include sip_auto.conf
+#include sip_voip_auto.conf
+#include sip_internal_auto.conf
+
+
+[airtel4]
+type=peer
+disallow=all
+allow=ulaw
+username=+914049166166
+fromuser=+914049166166
+secret=Vishwa#1
+fromdomain=ap.ims.airtel.in
+host=ap.ims.airtel.in
+outboundproxy=10.5.109.131
+nat=yes
+transport=UDP
+qualify=yes
+insecure=port,invite
+defaultexpiry=1800
+ignoreregexpire=yes
+mazexpiry=3600
+pedantic=yes
+canreinvite=no
+context=from-pstn
+sendrpid=yes
+dtmfmode=rfc2833
+port=5060
+
